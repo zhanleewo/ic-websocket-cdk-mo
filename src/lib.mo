@@ -63,7 +63,7 @@ module {
 	///
 	/// # Traps
 	/// If the parameters are invalid. See [`WsInitParams::check_validity`] for more details.
-	public class IcWebSocket(init_ws_state : IcWebSocketState, params : WsInitParams, handlers : WsHandlers) {
+	public class IcWebSocket<system>(init_ws_state : IcWebSocketState, params : WsInitParams, handlers : WsHandlers) {
 		/// The state of the IC WebSocket.
 		private var WS_STATE : IcWebSocketState = init_ws_state;
 
@@ -76,7 +76,7 @@ module {
 			Timers.cancel_timers(WS_STATE);
 
 			// schedule a timer that will send an acknowledgement message to clients
-			Timers.schedule_send_ack_to_clients(WS_STATE, params.send_ack_interval_ms, handlers);
+			Timers.schedule_send_ack_to_clients<system>(WS_STATE, params.send_ack_interval_ms, handlers);
 		};
 
 		/// Handles the WS connection open event sent by the client and relayed by the Gateway.
